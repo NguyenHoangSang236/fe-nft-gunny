@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import TextInput from '../../common-components/TextInput';
 import Text from '../../common-components/Text';
-import useStates from '../../utils/hooks/useStates';
 import Button from '../../common-components/Button';
 import themeColor from '../../config/themeColor';
 import Container from '../../common-components/Container';
@@ -11,31 +12,29 @@ import { useNavigate } from 'react-router-dom';
 function LoginPage() {
     const navigate = useNavigate();
 
-    const [states, setStates] = useStates({
-        username: '',
-        password: '',
+    // Define validation schema using Yup
+    const LoginSchema = Yup.object().shape({
+        username: Yup.string()
+            .required('Username is required'),
+        password: Yup.string()
+            .required('Password is required')
+            .min(6, 'Password must be at least 6 characters')
     });
 
-    const handleLogin = useCallback(
-        () => {
-            alert('Login');
-        },
-        []
-    );
+    const handleForgotPassword = () => {
+        alert('Forgot password');
+    };
 
-    const handleForgotPassword = useCallback(
-        () => {
-            alert('Forgot password');
-        },
-        []
-    );
+    const handleRegister = () => {
+        navigate('/register');
+    };
 
-    const handleRegister = useCallback(
-        () => {
-            navigate('/register')
-        },
-        []
-    );
+    const handleLogin = (values, {setSubmitting}) => {
+        // Handle form submission
+        console.log('Form values:', values);
+        alert('Login with: ' + JSON.stringify(values));
+        setSubmitting(false);
+    }
 
     return (
         <Container
@@ -69,37 +68,84 @@ function LoginPage() {
                     textAlign='center'
                     color={themeColor.textSecondary}
                 />
-                <TextInput
-                    placeholder="Enter your username here"
-                    value={states.username}
-                    onChange={(e) => setStates({ username: e.target.value })}
-                    width='100%'
-                    margin='30px 0px 5px 0px'
-                    borderRadius='40px'
-                />
-                <TextInput
-                    placeholder="Enter your password here"
-                    value={states.password}
-                    onChange={(e) => setStates({ password: e.target.value })}
-                    width='100%'
-                    margin='5px 0px'
-                    isPassword={true}
-                    borderRadius='40px'
-                />
-                <Button
-                    label={
-                        <Text
-                            text='Login'
-                            fontSize='24px'
-                            fontWeight='bold'
-                        />
-                    }
-                    onClick={handleLogin} 
-                    width='100%'
-                    margin='15px 0px 5px 0px'
-                    backgroundColor='#DAA020CC'
-                    borderRadius='40px'
-                />
+
+                <Formik
+                    initialValues={{
+                        username: '',
+                        password: ''
+                    }}
+                    validationSchema={LoginSchema}
+                    onSubmit={handleLogin}
+                >
+                    {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                        <Form style={{ width: '100%' }}>
+                            <div style={{ position: 'relative' }}>
+                                <TextInput
+                                    id='username'
+                                    placeholder="Enter your username here"
+                                    name="username"
+                                    value={values.username}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    width='100%'
+                                    margin='30px 0px 5px 0px'
+                                    borderRadius='40px'
+                                    borderColor={touched.username && errors.username ? 'red' : themeColor.border}
+                                />
+                                {touched.username && errors.username && (
+                                    <Text
+                                        text={errors.username}
+                                        fontSize='12px'
+                                        color='red'
+                                        margin='0px 0px 5px 15px'
+                                    />
+                                )}
+                            </div>
+
+                            <div style={{ position: 'relative' }}>
+                                <TextInput
+                                    id='password'
+                                    placeholder="Enter your password here"
+                                    name="password"
+                                    value={values.password}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    width='100%'
+                                    margin='5px 0px'
+                                    isPassword={true}
+                                    borderRadius='40px'
+                                    borderColor={touched.password && errors.password ? 'red' : themeColor.border}
+                                />
+                                {touched.password && errors.password && (
+                                    <Text
+                                        text={errors.password}
+                                        fontSize='12px'
+                                        color='red'
+                                        margin='0px 0px 5px 15px'
+                                    />
+                                )}
+                            </div>
+
+                            <Button
+                                label={
+                                    <Text
+                                        text='Login'
+                                        fontSize='24px'
+                                        fontWeight='bold'
+                                    />
+                                }
+                                type="submit"
+                                onClick={handleSubmit}
+                                disabled={isSubmitting}
+                                width='100%'
+                                margin='15px 0px 5px 0px'
+                                backgroundColor='#DAA020CC'
+                                borderRadius='40px'
+                            />
+                        </Form>
+                    )}
+                </Formik>
+
                 <Container
                     width='100%'
                     flexDirection={FlexDirection.ROW}

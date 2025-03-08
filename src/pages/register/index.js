@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import Container from "../../common-components/Container";
 import { HorizontalAlignment, VerticalAlignment } from "../../config/alignment";

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import themeColor from '../config/themeColor';
-import { alignItems, justifyContent } from '../utils/style/styleUtils';
 
-const PasswordToggleIcon = ({ isVisible, onClick }) => (
-    <span 
+const PasswordToggleIcon = ({ isVisible, onClick }) => {
+    PasswordToggleIcon.propTypes = {
+        isVisible: PropTypes.bool,
+        onClick: PropTypes.func
+    }
+
+    return (<span 
         style={{
             cursor: 'pointer',
         }}
@@ -13,10 +17,11 @@ const PasswordToggleIcon = ({ isVisible, onClick }) => (
         role="button"
     >
         {isVisible ? '👁️' : '🙈'}
-    </span>
-);
+    </span>);
+};
 
 function TextInput({ 
+    id,
     placeholder, 
     label,
     fontSize,
@@ -83,6 +88,7 @@ function TextInput({
             <div style={inputContainerStyle}>
                 {loading && <span>Loading...</span>}
                 <input
+                    id={id}
                     type={isPassword && !isPasswordVisible ? 'password' : 'text'}
                     placeholder={placeholder}
                     value={value}
@@ -119,6 +125,7 @@ TextInput.defaultProps = {
 };
 
 TextInput.propTypes = {
+    id: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -134,6 +141,8 @@ TextInput.propTypes = {
     isPassword: PropTypes.bool,
     disabled: PropTypes.bool,
     loading: PropTypes.bool,
+    label: PropTypes.string,
+    fontSize: PropTypes.string,
 };
 
 export default TextInput;
