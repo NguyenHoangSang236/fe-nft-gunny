@@ -1,7 +1,7 @@
 import React from 'react';
-import themeColor from '../config/themeColor';
-import { FlexDirection, HorizontalAlignment, VerticalAlignment } from '../config/alignment';
-import { justifyContent, alignItems, shadow } from '../utils/style/styleUtils';
+import PropTypes from 'prop-types';
+import { FlexDirection, HorizontalAlignment, VerticalAlignment } from '../config/Alignment';
+import { justifyContent, alignItems } from '../utils/style/styleUtils';
 
 function Container({ 
 	backgroundColor, 
@@ -23,30 +23,50 @@ function Container({
 	opacity,
 }) {
 	const style = {
-		backgroundColor: backgroundColor, 
+		backgroundColor, 
 		backgroundImage: backgroundImage ? `url(${process.env.PUBLIC_URL}/${backgroundImage})` : 'none',
 		backgroundSize: backgroundFit,
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
 		display: 'flex',
-		flexDirection: flexDirection,
+		flexDirection,
 		justifyContent: justifyContent(horizontalAlignment),
 		alignItems: alignItems(verticalAlignment),
-		width: width, 
-		height: height, 
-		padding: padding, 
-		margin: margin, 
-		borderRadius: borderRadius, 
-		borderWidth: borderWidth, 
-		borderStyle: borderStyle, 
-		borderColor: borderColor, 
-		boxShadow: boxShadow, 
+		width, 
+		height, 
+		padding, 
+		margin, 
+		borderRadius, 
+		borderWidth, 
+		borderStyle, 
+		borderColor, 
+		boxShadow, 
 		overflow: 'hidden', 
-		opacity: opacity,
+		opacity,
 	};
 
 	return <div style={style}>{children}</div>;
 }
+
+Container.propTypes = {
+	backgroundColor: PropTypes.string,
+	backgroundFit: PropTypes.string,
+	backgroundImage: PropTypes.string,
+	children: PropTypes.node,
+	width: PropTypes.string,
+	height: PropTypes.string,
+	padding: PropTypes.string,
+	margin: PropTypes.string,
+	borderRadius: PropTypes.string,
+	borderWidth: PropTypes.string,
+	borderStyle: PropTypes.string,
+	borderColor: PropTypes.string,
+	horizontalAlignment: PropTypes.oneOf(Object.values(HorizontalAlignment)),
+	verticalAlignment: PropTypes.oneOf(Object.values(VerticalAlignment)),
+	flexDirection: PropTypes.oneOf(Object.values(FlexDirection)),
+	boxShadow: PropTypes.string,
+	opacity: PropTypes.number
+};
 
 Container.defaultProps = {
 	backgroundColor: 'none',
@@ -67,6 +87,7 @@ Container.defaultProps = {
 };
 
 export default Container;
+
 
 
 

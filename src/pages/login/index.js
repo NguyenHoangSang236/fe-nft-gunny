@@ -4,13 +4,13 @@ import * as Yup from 'yup';
 import TextInput from '../../common-components/TextInput';
 import Text from '../../common-components/Text';
 import Button from '../../common-components/Button';
-import themeColor from '../../config/themeColor';
+import themeColor from '../../config/ThemeColor';
 import Container from '../../common-components/Container';
-import { FlexDirection, HorizontalAlignment, VerticalAlignment } from '../../config/alignment';
-import { useNavigate } from 'react-router-dom';
+import { FlexDirection, HorizontalAlignment, VerticalAlignment } from '../../config/Alignment';
+import useLogic from './useLogic';
 
 function LoginPage() {
-    const navigate = useNavigate();
+    const {handleLogin, handleForgotPassword, handleRedirectToRegisterPage} = useLogic();
 
     // Define validation schema using Yup
     const LoginSchema = Yup.object().shape({
@@ -20,21 +20,6 @@ function LoginPage() {
             .required('Password is required')
             .min(6, 'Password must be at least 6 characters')
     });
-
-    const handleForgotPassword = () => {
-        alert('Forgot password');
-    };
-
-    const handleRegister = () => {
-        navigate('/register');
-    };
-
-    const handleLogin = (values, {setSubmitting}) => {
-        // Handle form submission
-        console.log('Form values:', values);
-        alert('Login with: ' + JSON.stringify(values));
-        setSubmitting(false);
-    }
 
     return (
         <Container
@@ -172,7 +157,7 @@ function LoginPage() {
                     fontWeight='bold'
                     textDecoration='underline'
                     color='#FF4500'
-                    onClick={handleRegister}
+                    onClick={handleRedirectToRegisterPage}
                 />
             </Container>
         </Container>

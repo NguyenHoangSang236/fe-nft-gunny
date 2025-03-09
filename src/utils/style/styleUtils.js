@@ -1,5 +1,5 @@
-import { HorizontalAlignment, VerticalAlignment } from "../../config/alignment";
-import themeColor from "../../config/themeColor";
+import { HorizontalAlignment, VerticalAlignment } from "../../config/Alignment";
+import themeColor from "../../config/ThemeColor";
 
 export const shadow = ({ 
     offsetX = "0px",

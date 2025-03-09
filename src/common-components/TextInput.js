@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import themeColor from '../config/themeColor';
+import themeColor from '../config/ThemeColor';
 
 const PasswordToggleIcon = ({ isVisible, onClick }) => {
     PasswordToggleIcon.propTypes = {

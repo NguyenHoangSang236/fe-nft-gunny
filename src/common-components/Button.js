@@ -1,5 +1,6 @@
 import React from 'react';
-import themeColor from '../config/themeColor';
+import themeColor from '../config/ThemeColor';
+import PropTypes from 'prop-types';
 
 function Button({ 
   label, 
@@ -106,6 +107,28 @@ Button.defaultProps = {
   backgroundColorOnClick: '#5a7be1',
   iconAndLabelGap: '10px',
   margin: 'none'
+};
+
+Button.propTypes = {
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  icon: PropTypes.node,
+  tooltip: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+  borderRadius: PropTypes.string,
+  cursor: PropTypes.string,
+  padding: PropTypes.string,
+  outline: PropTypes.string,
+  borderWidth: PropTypes.string,
+  borderStyle: PropTypes.string,
+  borderColor: PropTypes.string,
+  fontSize: PropTypes.string,
+  backgroundColorOnClick: PropTypes.string,
+  iconAndLabelGap: PropTypes.string,
+  margin: PropTypes.string
 };
 
 export default Button;
