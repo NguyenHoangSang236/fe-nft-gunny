@@ -32,8 +32,8 @@ function Container({
 		flexDirection,
 		justifyContent: justifyContent(horizontalAlignment),
 		alignItems: alignItems(verticalAlignment),
-		width, 
-		height, 
+		width: width === 'auto' ? '100%' : width, 
+		height: height === 'auto' ? '100%' : height, 
 		padding, 
 		margin, 
 		borderRadius, 
@@ -43,6 +43,7 @@ function Container({
 		boxShadow, 
 		overflow: 'hidden', 
 		opacity,
+		flexGrow: (width === 'auto' || height === 'auto') ? 1 : 0,
 	};
 
 	return <div style={style}>{children}</div>;
@@ -87,7 +88,6 @@ Container.defaultProps = {
 };
 
 export default Container;
-
 
 
 

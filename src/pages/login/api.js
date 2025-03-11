@@ -13,14 +13,4 @@ const login = async (username, password) => {
     }
 };
 
-const register = async (payload) => {
-    try {
-        const response = await axios.post(ApiResource.user.register, payload);
-        return response.data;
-    } catch (error) {
-        console.error("Register failed:", error.response?.data || error.message);
-        throw error;
-    }
-};
-
-export { login, register };
+export { login };

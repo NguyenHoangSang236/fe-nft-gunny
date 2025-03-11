@@ -1,20 +1,20 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from "react-router-dom";
 import Container from "../../common-components/Container";
 import { FlexDirection, HorizontalAlignment, VerticalAlignment } from "../../config/Alignment";
 import TextInput from "../../common-components/TextInput";
 import Text from "../../common-components/Text";
 import Button from "../../common-components/Button";
 import themeColor from "../../config/ThemeColor";
+import useLogic from './useLogic';
 
 function RegisterPage() {
-    const navigate = useNavigate();
+    const {handleRegister, handleRedirectToLogin} = useLogic();
 
     // Define validation schema using Yup - all fields required
     const RegisterSchema = Yup.object().shape({
-        username: Yup.string()
+        user_name: Yup.string()
             .required('Username is required')
             .min(3, 'Username must be at least 3 characters'),
         password: Yup.string()
@@ -26,32 +26,20 @@ function RegisterPage() {
         email: Yup.string()
             .required('Email is required')
             .email('Invalid email format'),
-        phoneNumber: Yup.string()
+        phone_number: Yup.string()
             .required('Phone number is required')
             .matches(/^[0-9]{10,15}$/, 'Phone number must be between 10-15 digits'),
-        walletHashAddress: Yup.string()
+        wallet_hash_address: Yup.string()
             .required('Wallet address is required')
-            .matches(/^(0x)?[0-9a-fA-F]{40}$/, 'Invalid wallet address format')
+            .matches(/^(0x)?[0-9a-fA-F]{64}$/, 'Invalid wallet address format')
     });
-
-    const handleRegister = (values, { setSubmitting }) => {
-        console.log('Registration values:', values);
-        alert('Registration with: ' + JSON.stringify(values));
-        setSubmitting(false);
-        // Navigate to login page after successful registration
-        // navigate('/login');
-    };
-
-    const handleBackToLogin = () => {
-        navigate('/login');
-    };
 
     return (
         <Container
             horizontalAlignment={HorizontalAlignment.CENTER}
             verticalAlignment={VerticalAlignment.CENTER}
-            width='100vw'
             backgroundImage='game_logo.png'
+            padding='10vh 0px 10vh 0px'
         >
             <Container
                 horizontalAlignment={HorizontalAlignment.CENTER}
@@ -89,12 +77,12 @@ function RegisterPage() {
 
                 <Formik
                     initialValues={{
-                        username: '',
+                        user_name: '',
                         password: '',
-                        cfmPassword: '',
+                        cfmPassword: '', 
                         email: '',
-                        phoneNumber: '',
-                        walletHashAddress: '',
+                        phone_number: '',
+                        wallet_hash_address: '',
                     }}
                     validationSchema={RegisterSchema}
                     onSubmit={handleRegister}
@@ -103,20 +91,20 @@ function RegisterPage() {
                         <Form style={{ width: '100%' }}>
                             <div style={{ position: 'relative' }}>
                                 <TextInput
-                                    id='username'
+                                    id='user_name'
                                     placeholder="Enter your username"
-                                    name="username"
-                                    value={values.username}
+                                    name="user_name"
+                                    value={values.user_name}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     width='100%'
                                     margin='10px 0px 5px 0px'
                                     borderRadius='40px'
-                                    borderColor={touched.username && errors.username ? 'red' : themeColor.border}
+                                    borderColor={touched.user_name && errors.user_name ? 'red' : themeColor.border}
                                 />
-                                {touched.username && errors.username && (
+                                {touched.user_name && errors.user_name && (
                                     <Text
-                                        text={errors.username}
+                                        text={errors.user_name}
                                         fontSize='12px'
                                         color='red'
                                         margin='0px 0px 5px 15px'
@@ -149,20 +137,20 @@ function RegisterPage() {
 
                             <div style={{ position: 'relative' }}>
                                 <TextInput
-                                    id='phoneNumber'
+                                    id='phone_number'
                                     placeholder="Enter your phone number"
-                                    name="phoneNumber"
-                                    value={values.phoneNumber}
+                                    name="phone_number"
+                                    value={values.phone_number}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     width='100%'
                                     margin='10px 0px 5px 0px'
                                     borderRadius='40px'
-                                    borderColor={touched.phoneNumber && errors.phoneNumber ? 'red' : themeColor.border}
+                                    borderColor={touched.phone_number && errors.phone_number ? 'red' : themeColor.border}
                                 />
-                                {touched.phoneNumber && errors.phoneNumber && (
+                                {touched.phone_number && errors.phone_number && (
                                     <Text
-                                        text={errors.phoneNumber}
+                                        text={errors.phone_number}
                                         fontSize='12px'
                                         color='red'
                                         margin='0px 0px 5px 15px'
@@ -172,20 +160,20 @@ function RegisterPage() {
 
                             <div style={{ position: 'relative' }}>
                                 <TextInput
-                                    id='walletHashAddress'
+                                    id='wallet_hash_address'
                                     placeholder="Enter your wallet address"
-                                    name="walletHashAddress"
-                                    value={values.walletHashAddress}
+                                    name="wallet_hash_address"
+                                    value={values.wallet_hash_address}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     width='100%'
                                     margin='10px 0px 5px 0px'
                                     borderRadius='40px'
-                                    borderColor={touched.walletHashAddress && errors.walletHashAddress ? 'red' : themeColor.border}
+                                    borderColor={touched.wallet_hash_address && errors.wallet_hash_address ? 'red' : themeColor.border}
                                 />
-                                {touched.walletHashAddress && errors.walletHashAddress && (
+                                {touched.wallet_hash_address && errors.wallet_hash_address && (
                                     <Text
-                                        text={errors.walletHashAddress}
+                                        text={errors.wallet_hash_address}
                                         fontSize='12px'
                                         color='red'
                                         margin='0px 0px 5px 15px'
@@ -279,7 +267,7 @@ function RegisterPage() {
                         fontWeight='bold'
                         textDecoration='underline'
                         color='#2040e9'
-                        onClick={handleBackToLogin}
+                        onClick={handleRedirectToLogin}
                     />
                 </Container>
             </Container>
